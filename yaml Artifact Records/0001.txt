@@ -1,0 +1,32 @@
+---
+object: picture
+type: jpg
+description:  This is the only formal family photo session I can remember.
+- contributor: Andrea Powell  
+subjects:
+    people:
+      - Andrea Powell
+      - Wm. Dan Powell
+      - Christy (Jones) Powell
+    location:
+        title: Longview, Washington
+        residence-of:
+        - Andrea Powell
+        - Wm. Dan Powell
+        - Christy (Jones) Powell
+        spacial:
+          city: "Longview"
+          state: "Washington"
+          county: "Cowlitz County"
+          text: "I believe this was taken at [Calvery Community Church] in Longview."
+        temporal:
+          year: 1977
+          certainty: estimated
+          text: Obviously taken before [Event:Christy & Dan divorced]
+
+---
+object: Person
+name: Andrea Powell
+relationships:
+  - Andrea is the daughter of Wm. Dan Powell
+  - Christy is the wife of Wm. Dan Powell
