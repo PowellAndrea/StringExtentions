@@ -1,7 +1,7 @@
 ﻿//https://centralia.instructure.com/courses/2326195/assignments/29997941
 
-using System.Linq;
-using System.Runtime.CompilerServices;
+using System.Collections.Generic;
+using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Text.RegularExpressions;
 
@@ -9,23 +9,8 @@ namespace StringExtention
 {
     public static class SillyString
     {
-        //public static string TitleCase(this string str, string sentance)
-        //{
-        //    StringBuilder sb = new StringBuilder();
-        //    string[] words = sentance.Split(new char[]
-        //    {
-        //        ' ','.' ,'?'
-        //    }, StringSplitOptions.None);
-
-        //    for (int i = 0; i < words.Length; i++)
-        //    {
-        //        words[i] = words[i].Substring(0, 1).ToUpper() + words[i].Substring(1).ToLower();
-        //        sb.Append(words[i] + " ");
-        //    }
-        //    return sb.ToString().Trim();
-        //}
-
-
+        public enum MinMaxType { MAX_OCCURANCE, MIN_OCCURANCE, MAX_OCCURANCE_VOWELS, MIN_OCCURANCE_VOWELS }
+        
         public static bool IsPalindrome(this string input)
         {
         // Default palindrome is not case sensative.
@@ -43,7 +28,6 @@ namespace StringExtention
             if (newWord.Equals(input)) { return true; }
             else { return false; }
         }
-
 
         public static string Reverse(this string input)
         {
@@ -100,9 +84,6 @@ namespace StringExtention
 
         public static string RemoveDuplicates(this string input)
         {
-            //Create an Extension Method which removes any duplicate characters
-            //found and preserves one of the duplicates("dogfood" returns "dog")
-            //all visible characters(spaces, punctuation, etc.) are targets
             string newString = new(input[0].ToString());
 
             foreach (char c in input)
@@ -115,16 +96,71 @@ namespace StringExtention
             return newString.ToString();
         }
 
-        public static int Method5(string str)
+        public static int MinMax(this string input, MinMaxType method)
         {
-            //Create an Extension Method which returns the
-            //maximum occurrences of a character in the string as an int;
-            //overload to allow for an enumeration of
-            //MAX_OCCURANCE
-            //MIN_OCCURANCE
-            //MAX_OCCURANCE_VOWELS
-            //MIN_OCCURANCE_VOWELS
+            string noDup = input.RemoveDuplicates();
+            var results = new List<Tuple<char, int>>();
+            string vowels = "aeiou";
 
+            foreach (char letter in noDup)
+            {
+                results.Add(Tuple.Create(letter, input.SearchPattern(letter)));
+            }
+
+            Console.WriteLine("Count of letters in " + input);
+            foreach (Tuple<char, int> pair in results)
+            {
+                Console.WriteLine("\t" + pair.Item1.ToString() + ": " + pair.Item2.ToString());
+            }
+
+            switch (method)
+            {
+                // Left Console writes left here for testing
+                case MinMaxType.MAX_OCCURANCE:
+                    { 
+                        var x = results.MaxBy(x => x.Item2);
+                        Console.WriteLine("First maximum is " + x.Item1 + " at " + x.Item2);
+                        return x.Item2;}
+
+                case MinMaxType.MIN_OCCURANCE:
+                    {
+                        var x = results.MinBy(x => x.Item2);
+                        Console.WriteLine("First minimum is " + x.Item1 + " at " + x.Item2);
+                        return x.Item2;
+                    }
+
+                case MinMaxType.MAX_OCCURANCE_VOWELS:
+                    {
+                        var newResults = new List<Tuple<char, int>>();
+
+                        foreach (var item in results)
+                        {
+                            if (!vowels.Contains(item.Item1))
+                            {
+                                newResults.Add(item);
+                            }
+                        }
+                        var x = newResults.MaxBy(x => x.Item2);
+                        Console.WriteLine("First maximum vowel is " + x.Item1 + " at " + x.Item2);
+                        return x.Item2;
+                    }
+// Create 'removeVowels' method and redo these if time
+                case MinMaxType.MIN_OCCURANCE_VOWELS:
+                    {
+                        var newResults = new List<Tuple<char, int>>();
+
+                        foreach (var item in results)
+                        {
+                            if (vowels.Contains(item.Item1))
+                            {
+                                newResults.Append(item);
+                            }
+                        }
+                        var x = newResults.MinBy(x => x.Item2);
+                        Console.WriteLine("First minimum vowel is " + x.Item1 + " at " + x.Item2);
+                        return x.Item2;
+                    }
+            }
             return 0;
         }
     }

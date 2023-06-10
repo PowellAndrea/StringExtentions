@@ -43,27 +43,33 @@ while (true) {
     #endregion
 
     #region Method 5:  Min/Max
+    // Calling these to fire methods for testg - I left the console logic in the extention class because I did not think you would care
+    input.MinMax(SillyString.MinMaxType.MAX_OCCURANCE);
+    input.MinMax(SillyString.MinMaxType.MIN_OCCURANCE);
+    input.MinMax(SillyString.MinMaxType.MAX_OCCURANCE_VOWELS);
+    input.MinMax(SillyString.MinMaxType.MAX_OCCURANCE_VOWELS);
     #endregion
 
+// Below code works - disabling because it interrupts my mojo
 
-    #region Method 3: Search param
-    Console.WriteLine("Enter a string to search and a pattern to search for.");
-    Console.Write("String to Search:");
-    string myString = Console.ReadLine();
-    Console.Write("Pattern to search for:");
+  //#region Method 3: Search param
+  //  Console.WriteLine("Enter a string to search and a pattern to search for.");
+  //  Console.Write("String to Search:");
+  //  string myString = Console.ReadLine();
+  //  Console.Write("Pattern to search for:");
 
-    string pattern = Console.ReadLine();
-    int result = myString.SearchPattern(pattern);
-    if (result == -1)
-    {
-        Console.WriteLine(pattern + " does not appear in " + myString);
-    }
-    else
-    {
-        Console.WriteLine(pattern + " appears " + result + " times in " + myString);
-    }
-    Console.WriteLine("\n\n\n");
+  //  string pattern = Console.ReadLine();
+  //  int result = myString.SearchPattern(pattern);
+  //  if (result == -1)
+  //  {
+  //      Console.WriteLine(pattern + " does not appear in " + myString);
+  //  }
+  //  else
+  //  {
+  //      Console.WriteLine(pattern + " appears " + result + " times in " + myString);
+  //  }
+  //  Console.WriteLine("\n\n\n");
 
-    #endregion
+  //  #endregion
 
 };
