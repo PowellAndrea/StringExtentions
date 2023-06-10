@@ -1,5 +1,7 @@
 ﻿using StringExtention;
 using System;
+using System.Xml.Schema;
+
 while (true) {
         Console.WriteLine("Word up!");
         Console.WriteLine("<ctrl> <c> to quit");
@@ -8,8 +10,8 @@ while (true) {
 
         Console.WriteLine("Your word is " + input + "\n");
 
-        // Method 1:  Is Palindrome
-        if (input.IsPalindrome())
+    #region Method 1:  Is Palindrome
+    if (input.IsPalindrome())
         {
             Console.WriteLine("\tNot case sensative: " + input + " is a palindrome.\n");
         }
@@ -27,11 +29,41 @@ while (true) {
         {
             Console.WriteLine("\tCase sensative: " + input + " is not palindrome.\n");
         }
+    #endregion
+    
+    #region Method 2: Reverse
+    Console.WriteLine("\tBackwards your word is " + input.Reverse(false) + ".\n");
+
+    // Method 2a: Reverse and preserve location of caps
+    Console.WriteLine("\tOverload to preserve location of the capital letters: " + input.Reverse(true) + ".\n");
+    #endregion
+
+    #region Method 4: Remove Duplicates
+    Console.WriteLine("Without duplictes your word is:" + input.RemoveDuplicates() + "\n");
+    #endregion
+
+    #region Method 5:  Min/Max
+    #endregion
 
 
-        // Method 2: Reverse
-        Console.WriteLine("\tBackwards your word is " + input.Reverse(false) + ".\n");
+    #region Method 3: Search param
+    Console.WriteLine("Enter a string to search and a pattern to search for.");
+    Console.Write("String to Search:");
+    string myString = Console.ReadLine();
+    Console.Write("Pattern to search for:");
 
-        // Method 2a: Reverse and preserve location of caps
-        Console.WriteLine("\tOverload to preserve location of the capital letters: " + input.Reverse(true) + ".\n");
-    };
+    string pattern = Console.ReadLine();
+    int result = myString.SearchPattern(pattern);
+    if (result == -1)
+    {
+        Console.WriteLine(pattern + " does not appear in " + myString);
+    }
+    else
+    {
+        Console.WriteLine(pattern + " appears " + result + " times in " + myString);
+    }
+    Console.WriteLine("\n\n\n");
+
+    #endregion
+
+};

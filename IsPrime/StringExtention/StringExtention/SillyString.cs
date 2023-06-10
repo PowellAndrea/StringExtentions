@@ -3,27 +3,27 @@
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
+using System.Text.RegularExpressions;
 
 namespace StringExtention
 {
     public static class SillyString
     {
-        public static string TitleCase(this string str, string sentance)
-        {
-            StringBuilder sb = new StringBuilder();
-            string[] words = sentance.Split(new char[]
-            {
-                ' ','.' ,'?'
-            }, StringSplitOptions.None);
+        //public static string TitleCase(this string str, string sentance)
+        //{
+        //    StringBuilder sb = new StringBuilder();
+        //    string[] words = sentance.Split(new char[]
+        //    {
+        //        ' ','.' ,'?'
+        //    }, StringSplitOptions.None);
 
-            for (int i = 0; i < words.Length; i++)
-            {
-                words[i] = words[i].Substring(0, 1).ToUpper() + words[i].Substring(1).ToLower();
-                sb.Append(words[i] + " ");
-            }
-            return sb.ToString().Trim();
-        }
-
+        //    for (int i = 0; i < words.Length; i++)
+        //    {
+        //        words[i] = words[i].Substring(0, 1).ToUpper() + words[i].Substring(1).ToLower();
+        //        sb.Append(words[i] + " ");
+        //    }
+        //    return sb.ToString().Trim();
+        //}
 
 
         public static bool IsPalindrome(this string input)
@@ -84,21 +84,35 @@ namespace StringExtention
 
         }
 
-        public static int Method3(this string input)
+        public static int SearchPattern(this string input, char pattern)
         {
-            //Create an Extension Method which allows for a search parameter
-            //or either char or string and
-            //returns the number of occurrences of the pattern as an int,
-            //with -1 returned if no match is found
-            return 0;
+            string s = pattern.ToString();
+            return input.SearchPattern(s);
         }
 
-        public static string Method4(string str)
+        public static int SearchPattern(this string input, string pattern)
         {
-        //Create an Extension Method which removes any duplicate characters
-        //found and preserves one of the duplicates("dogfood" returns "dog")
-        //all visible characters(spaces, punctuation, etc.) are targets
-            return str;
+            var searchPattern = new Regex(@pattern);
+            int count = searchPattern.Matches(input).Count();
+            if (count > 0 ) { return count; }
+            else { return -1; }
+        }
+
+        public static string RemoveDuplicates(this string input)
+        {
+            //Create an Extension Method which removes any duplicate characters
+            //found and preserves one of the duplicates("dogfood" returns "dog")
+            //all visible characters(spaces, punctuation, etc.) are targets
+            string newString = new(input[0].ToString());
+
+            foreach (char c in input)
+            {
+                if (newString.SearchPattern(c).Equals(-1))
+                {
+                    newString = newString + c;
+                }
+            }     
+            return newString.ToString();
         }
 
         public static int Method5(string str)
