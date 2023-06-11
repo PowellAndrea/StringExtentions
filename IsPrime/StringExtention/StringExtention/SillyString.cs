@@ -96,6 +96,12 @@ namespace StringExtention
             return newString.ToString();
         }
 
+        //public static int MinMax(this string input)
+        //{
+        //    int min = 0;
+        //}
+
+
         public static int MinMax(this string input, MinMaxType method)
         {
             string noDup = input.RemoveDuplicates();
@@ -105,12 +111,6 @@ namespace StringExtention
             foreach (char letter in noDup)
             {
                 results.Add(Tuple.Create(letter, input.SearchPattern(letter)));
-            }
-
-            Console.WriteLine("Count of letters in " + input);
-            foreach (Tuple<char, int> pair in results)
-            {
-                Console.WriteLine("\t" + pair.Item1.ToString() + ": " + pair.Item2.ToString());
             }
 
             switch (method)
@@ -153,12 +153,22 @@ namespace StringExtention
                         {
                             if (vowels.Contains(item.Item1))
                             {
-                                newResults.Append(item);
+                                newResults.Add(item);
                             }
                         }
                         var x = newResults.MinBy(x => x.Item2);
                         Console.WriteLine("First minimum vowel is " + x.Item1 + " at " + x.Item2);
                         return x.Item2;
+                    }
+
+                    default:
+                    {
+                        Console.WriteLine("Count of letters in " + input);
+                        foreach (Tuple<char, int> pair in results)
+                        {
+                            Console.WriteLine("\t" + pair.Item1.ToString() + ": " + pair.Item2.ToString());
+                        }
+                        break;
                     }
             }
             return 0;
