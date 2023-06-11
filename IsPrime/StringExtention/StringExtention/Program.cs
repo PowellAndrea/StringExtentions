@@ -32,10 +32,10 @@ while (true) {
     #endregion
     
     #region Method 2: Reverse
-    Console.WriteLine("\tBackwards your word is " + input.Reverse(false) + ".\n");
+    Console.WriteLine("\tBackwards your word is " + input.Reverse(false) + "\n");
 
     // Method 2a: Reverse and preserve location of caps
-    Console.WriteLine("\tOverload to preserve location of the capital letters: " + input.Reverse(true) + ".\n");
+    Console.WriteLine("\tOverload to preserve location of the capital letters: " + input.Reverse(true) + "\n");
     #endregion
 
     #region Method 4: Remove Duplicates

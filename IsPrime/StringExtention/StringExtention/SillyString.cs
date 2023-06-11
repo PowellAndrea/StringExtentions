@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Text.RegularExpressions;
+using System.Xml.XPath;
 
 namespace StringExtention
 {
@@ -68,6 +69,10 @@ namespace StringExtention
 
         }
 
+        /*Create an Extension Method which allows for a search parameter or either char or string;
+         * and returns the number of occurrences of the pattern as an int;
+         * with -1 returned if no match is found
+         */
         public static int SearchPattern(this string input, char pattern)
         {
             string s = pattern.ToString();
@@ -96,82 +101,90 @@ namespace StringExtention
             return newString.ToString();
         }
 
-        //public static int MinMax(this string input)
-        //{
-        //    int min = 0;
-        //}
-
-
-        public static int MinMax(this string input, MinMaxType method)
+        public static bool IsVowel(char letter)
         {
-            string noDup = input.RemoveDuplicates();
-            var results = new List<Tuple<char, int>>();
-            string vowels = "aeiou";
+            string vowels = "aeiou";        // but don't ask Y
+            if(vowels.Contains(letter)) {
+                return true;    
+            }
+            return false;
+        }
 
+        public static string OnlyVowels(this string input)
+        {
+            StringBuilder onlyVowels = new();
+
+            foreach (char letter in input)
+            {
+                if (IsVowel(letter))
+                {
+                    onlyVowels.Append(letter);
+                }
+            }
+            return onlyVowels.ToString();
+        }
+
+        #region Method 5:  MinMax
+
+        internal static List<Tuple<char, int>> GetCounts(this string input)
+        {
+            var results = new List<Tuple<char, int>>();
+            string noDup = input.RemoveDuplicates();
+
+            // Create tuple list for [letter],[count]
             foreach (char letter in noDup)
             {
                 results.Add(Tuple.Create(letter, input.SearchPattern(letter)));
             }
-
-            switch (method)
-            {
-                // Left Console writes left here for testing
-                case MinMaxType.MAX_OCCURANCE:
-                    { 
-                        var x = results.MaxBy(x => x.Item2);
-                        Console.WriteLine("First maximum is " + x.Item1 + " at " + x.Item2);
-                        return x.Item2;}
-
-                case MinMaxType.MIN_OCCURANCE:
-                    {
-                        var x = results.MinBy(x => x.Item2);
-                        Console.WriteLine("First minimum is " + x.Item1 + " at " + x.Item2);
-                        return x.Item2;
-                    }
-
-                case MinMaxType.MAX_OCCURANCE_VOWELS:
-                    {
-                        var newResults = new List<Tuple<char, int>>();
-
-                        foreach (var item in results)
-                        {
-                            if (!vowels.Contains(item.Item1))
-                            {
-                                newResults.Add(item);
-                            }
-                        }
-                        var x = newResults.MaxBy(x => x.Item2);
-                        Console.WriteLine("First maximum vowel is " + x.Item1 + " at " + x.Item2);
-                        return x.Item2;
-                    }
-// Create 'removeVowels' method and redo these if time
-                case MinMaxType.MIN_OCCURANCE_VOWELS:
-                    {
-                        var newResults = new List<Tuple<char, int>>();
-
-                        foreach (var item in results)
-                        {
-                            if (vowels.Contains(item.Item1))
-                            {
-                                newResults.Add(item);
-                            }
-                        }
-                        var x = newResults.MinBy(x => x.Item2);
-                        Console.WriteLine("First minimum vowel is " + x.Item1 + " at " + x.Item2);
-                        return x.Item2;
-                    }
-
-                    default:
-                    {
-                        Console.WriteLine("Count of letters in " + input);
-                        foreach (Tuple<char, int> pair in results)
-                        {
-                            Console.WriteLine("\t" + pair.Item1.ToString() + ": " + pair.Item2.ToString());
-                        }
-                        break;
-                    }
-            }
-            return 0;
+            return results;
         }
-    }
+
+        public static string MinMax(this string input)
+        {
+            // Passes back human readable string with all [letter],[count] pairs
+            StringBuilder output = new();
+            output.Append("Count of letters in " + input + "\n");
+
+            foreach (Tuple<char, int> pair in GetCounts(input))
+            {
+                output.Append("\t" + pair.Item1.ToString() + ": " + pair.Item2.ToString() + "\n");
+            }
+
+            return output.ToString();
+        }
+
+        public static int MinMax(this string input, MinMaxType method)
+        {
+            var results = new List<Tuple<char, int>>();
+            string myLetter = "letter";
+            string searchString = input;
+
+            // Restrict to vowels as needed
+            if (method == MinMaxType.MIN_OCCURANCE_VOWELS || method == MinMaxType.MAX_OCCURANCE_VOWELS)
+            {
+                searchString = searchString.OnlyVowels();
+                myLetter = "vowel";
+            }
+            
+            results = searchString.GetCounts();
+
+            // Return either MaxBy or MinBy
+            if(method == MinMaxType.MAX_OCCURANCE_VOWELS || method == MinMaxType.MAX_OCCURANCE)
+            {
+                var x = results.MaxBy(x => x.Item2);
+                Console.WriteLine("First maximum " + myLetter + " is " + x.Item1 + " at " + x.Item2);
+                return x.Item2;
+            }
+            else // only dealing with the 4 options in the enumeration
+            {
+                var x = results.MinBy(x => x.Item2);
+                Console.WriteLine("First minimum " + myLetter + " is " + x.Item1 + " at " + x.Item2);
+                return x.Item2;
+            }
+
+
+
+        }
+    #endregion
+}
 }
