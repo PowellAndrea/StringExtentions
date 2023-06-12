@@ -87,18 +87,23 @@ namespace StringExtentionTest
             Assert.IsTrue(s.RemoveDuplicates() == "Hobglins");
         }
 
+        [TestMethod]
         public void RemoveDupFail()
         {
             string s = "Hobgoblins";
-            Assert.IsTrue(s.RemoveDuplicates() == "Hobgoblins");
+            Assert.IsFalse(s.RemoveDuplicates() == s);
         }
         #endregion
 
         #region Method 5: Min/Max, Complexity: 11
 
-
-        //[TestMethod]
-        // update Min/Max and add no override method to test
+        [TestMethod]
+        public void MinMax()
+        {
+            string s = "boo";
+            Assert.IsTrue(s.MinMax() == 0);
+            //Assert.AreEqual(s.MinMax(), "b,1 o,2");
+        }
 
         [TestMethod]
         public void MaxOccurance()

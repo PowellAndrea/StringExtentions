@@ -44,10 +44,11 @@ while (true) {
 
     #region Method 5:  Min/Max
     // Calling these to fire methods for testing - I left the console logic in the extention class because I did not think you would care
+    input.MinMax();
     input.MinMax(SillyString.MinMaxType.MAX_OCCURANCE);
     input.MinMax(SillyString.MinMaxType.MIN_OCCURANCE);
     input.MinMax(SillyString.MinMaxType.MAX_OCCURANCE_VOWELS);
-    input.MinMax(SillyString.MinMaxType.MAX_OCCURANCE_VOWELS);
+    input.MinMax(SillyString.MinMaxType.MIN_OCCURANCE_VOWELS);
     #endregion
 
     #region Method 3: Search param

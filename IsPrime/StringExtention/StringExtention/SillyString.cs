@@ -10,7 +10,7 @@ namespace StringExtention
 {
     public static class SillyString
     {
-        public enum MinMaxType { MAX_OCCURANCE, MIN_OCCURANCE, MAX_OCCURANCE_VOWELS, MIN_OCCURANCE_VOWELS }
+        public enum MinMaxType { NONE, MAX_OCCURANCE, MIN_OCCURANCE, MAX_OCCURANCE_VOWELS, MIN_OCCURANCE_VOWELS }
         
         public static bool IsPalindrome(this string input)
         {
@@ -89,7 +89,7 @@ namespace StringExtention
 
         public static string RemoveDuplicates(this string input)
         {
-            string newString = new(input[0].ToString());
+            string newString = string.Empty;
 
             foreach (char c in input)
             {
@@ -101,7 +101,7 @@ namespace StringExtention
             return newString.ToString();
         }
 
-        public static bool IsVowel(char letter)
+        internal static bool IsVowel(char letter)
         {
             string vowels = "aeiou";        // but don't ask Y
             if(vowels.Contains(letter)) {
@@ -110,7 +110,7 @@ namespace StringExtention
             return false;
         }
 
-        public static string OnlyVowels(this string input)
+        internal static string OnlyVowels(this string input)
         {
             StringBuilder onlyVowels = new();
 
@@ -123,8 +123,6 @@ namespace StringExtention
             }
             return onlyVowels.ToString();
         }
-
-        #region Method 5:  MinMax
 
         internal static List<Tuple<char, int>> GetCounts(this string input)
         {
@@ -139,21 +137,7 @@ namespace StringExtention
             return results;
         }
 
-        public static string MinMax(this string input)
-        {
-            // Passes back human readable string with all [letter],[count] pairs
-            StringBuilder output = new();
-            output.Append("Count of letters in " + input + "\n");
-
-            foreach (Tuple<char, int> pair in GetCounts(input))
-            {
-                output.Append("\t" + pair.Item1.ToString() + ": " + pair.Item2.ToString() + "\n");
-            }
-
-            return output.ToString();
-        }
-
-        public static int MinMax(this string input, MinMaxType method)
+        public static int MinMax(this string input, MinMaxType method=0)
         {
             var results = new List<Tuple<char, int>>();
             string myLetter = "letter";
@@ -165,26 +149,32 @@ namespace StringExtention
                 searchString = searchString.OnlyVowels();
                 myLetter = "vowel";
             }
-            
+
             results = searchString.GetCounts();
 
+            if (method == 0)
+            {
+                Console.WriteLine("The occurance of each letter in " + input + "is:");
+                foreach (var pair in results)
+                {
+                    Console.WriteLine("\t" + pair.Item1.ToString() + ": " + pair.Item2.ToString());
+                }
+                return 0;
+            }
+
             // Return either MaxBy or MinBy
-            if(method == MinMaxType.MAX_OCCURANCE_VOWELS || method == MinMaxType.MAX_OCCURANCE)
+            if (method == MinMaxType.MAX_OCCURANCE_VOWELS || method == MinMaxType.MAX_OCCURANCE)
             {
                 var x = results.MaxBy(x => x.Item2);
                 Console.WriteLine("First maximum " + myLetter + " is " + x.Item1 + " at " + x.Item2);
                 return x.Item2;
             }
-            else // only dealing with the 4 options in the enumeration
+            else
             {
                 var x = results.MinBy(x => x.Item2);
                 Console.WriteLine("First minimum " + myLetter + " is " + x.Item1 + " at " + x.Item2);
                 return x.Item2;
             }
-
-
-
         }
-    #endregion
-}
+    }
 }
