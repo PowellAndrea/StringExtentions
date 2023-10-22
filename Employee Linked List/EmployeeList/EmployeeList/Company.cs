@@ -1,49 +1,41 @@
-﻿using System.Reflection;
-using System.Reflection.PortableExecutable;
-using System.Runtime.CompilerServices;
-using System.Security.Cryptography.X509Certificates;
-
-namespace EmployeeList
+﻿namespace EmployeeList
 {
     public class Company
     {
         public EmployeeList EmployeeList { 
             get => _employeeList; 
             set => _employeeList = value; }
-        
-        private EmployeeList _employeeList;
 
-        public Company()
-        {
-            // = new EmployeeList();
+        private EmployeeList _employeeList = new EmployeeList();
 
-            //var path = Path.Combine(Environment.CurrentDirectory, "employees.csv");
-            //string path = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "employees.csv");
+
+        //public Company()
+        //{
+        //    // = new EmployeeList();
+
+        //    //var path = Path.Combine(Environment.CurrentDirectory, "employees.csv");
+        //    //string path = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "employees.csv");
             
-            //StreamReader reader = new StreamReader(path);
+        //    //StreamReader reader = new StreamReader(path);
 
-            //while (!reader.EndOfStream)
-            //{
-                //values = nextLine();
-                //var record = new List<thisEmployee>();
-                //string tempName = 
+        //    //while (!reader.EndOfStream)
+        //    //{
+        //        //values = nextLine();
+        //        //var record = new List<thisEmployee>();
+        //        //string tempName = 
 
 
-                //string FirstName = values[FirstName];
-                //Employee newEmployee = new(
-                //    tempName : values[0],
+        //        //string FirstName = values[FirstName];
+        //        //Employee newEmployee = new(
+        //        //    tempName : values[0],
                     
-                //    values[Name]);
+        //        //    values[Name]);
 
-                //_lastName = lastName;
-                //_firstName = firstName;
-                //_gender = gender;
-                //_department = department;
-                //_salary = salary;
-            //}
+        //        //_lastName = lastName;
+        //        //_firstName = firstName;
+        //        //_gender = gender;
+        //        //_department = department;
+        //        //_salary = salary;
+        //    //}
         }
     }
-
-
-
-}

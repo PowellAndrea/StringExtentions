@@ -19,17 +19,18 @@
 
         public Employee(
             string lastName, 
-            string firstName,
-            string gender,
-            string department,
-            double salary,
-            string tempName)
+            string firstName
+            //string gender,
+            //string department,
+            //double salary,
+            //string tempName
+            )
         {
             _lastName = lastName;
             _firstName = firstName;
-            _gender = gender;
-            _department = department;
-            _salary = salary;
+            //_gender = gender;
+            //_department = department;
+            //_salary = salary;
         }
     }
 }
